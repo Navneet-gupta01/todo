@@ -5,7 +5,7 @@ defmodule Todo.Server do
 
   @impl GenServer
   def init(_) do
-     Todo.List.new()
+     {:ok,Todo.List.new()}
   end
 
   @impl GenServer
@@ -19,7 +19,7 @@ defmodule Todo.Server do
 
   @impl GenServer
   def handle_cast({:put, entry},state) do
-    new_state = Todo.add_entry(state, entry)
+    new_state = Todo.List.add_entry(state, entry)
     {:noreply, new_state}
   end
 
@@ -32,6 +32,6 @@ defmodule Todo.Server do
   end
 
   def get_enrties(todoServer, date) do
-    GenServer.call(todoServer, {:get, date}, 5000) 
+    GenServer.call(todoServer, {:get, date}, 5000)
   end
 end
